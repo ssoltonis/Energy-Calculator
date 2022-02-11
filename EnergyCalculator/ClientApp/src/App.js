@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router';
+import { Route, Switch } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { Home } from './components/Home';
-import { FetchData } from './components/FetchData';
-import { Counter } from './components/Counter';
-
+import { History } from './components/History';
+import { Calculator } from './components/Calculator';
+import { ToastContainer } from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css';   
 import './custom.css'
 
 export default class App extends Component {
@@ -13,9 +14,12 @@ export default class App extends Component {
   render () {
     return (
       <Layout>
-        <Route exact path='/' component={Home} />
-        <Route path='/counter' component={Counter} />
-        <Route path='/fetch-data' component={FetchData} />
+          <div><ToastContainer/></div>
+          <Switch>
+            <Route exact path='/' component={Home} />
+            <Route path='/calculator' component={Calculator} />
+            <Route path='/history' component={History} />
+          </Switch>
       </Layout>
     );
   }
