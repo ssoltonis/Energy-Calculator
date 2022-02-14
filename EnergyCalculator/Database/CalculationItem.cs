@@ -6,9 +6,9 @@ namespace EnergyCalculator.Database
     {
         public int Id { get; set; }
 
-        public int Mass { get; set; }
+        public double Mass { get; set; }
 
-        public int Velocity { get; set; }
+        public double Velocity { get; set; }
 
         public double KineticEnergy { get; set; }
 

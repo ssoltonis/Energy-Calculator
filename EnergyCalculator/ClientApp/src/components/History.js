@@ -56,6 +56,8 @@ export class History extends Component {
     if (kineticEnergy > 999) {
       return Math.floor(kineticEnergy / 1000) + ' kJ'
     }
+
+    return kineticEnergy.toFixed(2) + ' J'
   }
 
   render() {

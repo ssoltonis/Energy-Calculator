@@ -30,7 +30,7 @@ export class Calculator extends Component {
               <label aria-live="polite">Mass: </label>
             </div>
             <div className="col-4">
-              <input type="number" name="mass" value={this.state.mass} onChange={evt => this.handleChange(evt)}/> kg
+              <input type="number" name="mass" value={this.state.mass} min={0.1} step={0.1} max={1000000} onChange={evt => this.handleChange(evt)}/> kg
             </div>
           </div>
           <div className="row">
@@ -38,7 +38,7 @@ export class Calculator extends Component {
               <label aria-live="polite">Velocity: </label>
             </div>
             <div className="col-4">
-              <input type="number" name="velocity" value={this.state.velocity} onChange={evt => this.handleChange(evt)}/> m/s
+              <input type="number" name="velocity" value={this.state.velocity} min={0.1} step={0.1} max={1000000} onChange={evt => this.handleChange(evt)}/> m/s
             </div>
           </div>
           <div className="row">
@@ -68,11 +68,15 @@ export class Calculator extends Component {
   }
 
   handleChange(evt) {
-    const value = evt.target.value;
-    this.setState({
-      ...this.state,
-      [evt.target.name]: value
-    });
+    
+    if (evt.target.validity.valid) {
+      const value = evt.target.value;
+    
+      this.setState({
+        ...this.state,
+        [evt.target.name]: value
+      });
+    }
   }
 
   onSubmit(evt) {
@@ -80,10 +84,15 @@ export class Calculator extends Component {
     var mass = this.state.mass;
     var velocity = this.state.velocity;
     
+    if (mass === 0 || velocity === 0) {
+      toast.warning('Please, enter some values');
+      return;
+    }
+
     var calculatedEnergy = calculateKineticEnergy(mass, velocity);
     this.setState({
       ...this.state,
-      kineticEnergy: calculatedEnergy,
+      kineticEnergy: calculatedEnergy.toFixed(2),
       comment: getComment(calculatedEnergy),
       danger: calculatedEnergy > 1000000
       }, () => {
